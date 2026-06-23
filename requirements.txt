@@ -6,6 +6,6 @@ sqlalchemy
 psycopg2-binary
 celery
 redis
-google-generativeai
+openai
 python-multipart
 httpx

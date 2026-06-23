@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     
     REDIS_URL: str = "redis://redis:6379/0"
     
-    GEMINI_API_KEY: str = ""
+    OPENROUTER_API_KEY: str = ""
 
     @property
     def DATABASE_URL(self) -> str:
