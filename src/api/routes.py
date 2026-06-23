@@ -35,7 +35,7 @@ async def upload_csv(
         raise HTTPException(status_code=400, detail="Malformed file contents or encoding.")
         
     # 3. Create a parent Job tracking record (Layer A)
-    new_job = Job(status="pending")
+    new_job = Job(status="pending", filename=file.filename)
     db.add(new_job)
     db.commit()
     db.refresh(new_job)

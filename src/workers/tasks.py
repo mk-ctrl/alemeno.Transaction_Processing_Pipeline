@@ -29,7 +29,9 @@ def process_transaction_job(job_id: str, csv_content: str):
         db.commit()
         
         # 2. Ingest and Clean the input data (Layer B)
-        cleaned_records = parse_and_clean_csv(csv_content)
+        cleaned_records, raw_count = parse_and_clean_csv(csv_content)
+        job.row_count_raw = raw_count
+        job.row_count_clean = len(cleaned_records)
         
         # 3. Process Statistical Outliers and Logical Anomalies (Layer C)
         cleaned_records = detect_anomalies(cleaned_records)
@@ -84,6 +86,7 @@ def process_transaction_job(job_id: str, csv_content: str):
             job = db.query(Job).filter(Job.id == job_id).first()
             if job:
                 job.status = "failed"
+                job.error_message = str(e)
                 db.commit()
         except Exception as db_err:
             logger.error(f"Failed to set status to FAILED for Job ID: {job_id}: {db_err}")

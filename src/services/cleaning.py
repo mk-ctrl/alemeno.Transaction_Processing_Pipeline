@@ -2,7 +2,7 @@ import csv
 import io
 import logging
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 logger = logging.getLogger("alemeno.services.cleaning")
 
@@ -70,7 +70,7 @@ def clean_category(category_str: Optional[str]) -> str:
         return "Uncategorised"
     return category_str.strip()
 
-def parse_and_clean_csv(csv_content: str) -> List[Dict[str, Any]]:
+def parse_and_clean_csv(csv_content: str) -> Tuple[List[Dict[str, Any]], int]:
     """
     Reads raw CSV string data, parses columns, applies cleaning/normalization rules,
     and removes exact duplicate records.
@@ -116,6 +116,7 @@ def parse_and_clean_csv(csv_content: str) -> List[Dict[str, Any]]:
     cleaned_rows: List[Dict[str, Any]] = []
     seen_signatures = set()
     
+    row_idx = 0
     for row_idx, row in enumerate(reader, start=1):
         # Extract fields (fallback to empty string if missing)
         txn_id = (row.get("txn_id") or "").strip() or None
@@ -167,4 +168,4 @@ def parse_and_clean_csv(csv_content: str) -> List[Dict[str, Any]]:
         })
 
     logger.info(f"Ingestion completed. Processed {row_idx} rows. Extracted {len(cleaned_rows)} unique cleaned records.")
-    return cleaned_rows
+    return cleaned_rows, row_idx

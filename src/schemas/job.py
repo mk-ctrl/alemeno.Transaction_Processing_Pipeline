@@ -9,6 +9,9 @@ class JobResponse(BaseModel):
     """
     id: str
     status: str
+    filename: Optional[str] = None
+    row_count_raw: Optional[int] = None
+    row_count_clean: Optional[int] = None
     created_at: datetime
     updated_at: datetime
 

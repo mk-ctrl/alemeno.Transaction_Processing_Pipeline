@@ -13,6 +13,10 @@ class Job(Base):
 
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     status = Column(String, nullable=False, default="pending")  # pending, processing, completed, failed
+    filename = Column(String, nullable=True)
+    row_count_raw = Column(Integer, nullable=True)
+    row_count_clean = Column(Integer, nullable=True)
+    error_message = Column(String, nullable=True)
     
     # Layer E metrics (persisted in database fields)
     total_spend_inr = Column(Float, nullable=True)
