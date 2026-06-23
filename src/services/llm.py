@@ -67,7 +67,7 @@ def call_llm_with_retry(prompt: str, schema_class, max_retries: int = 3, initial
             system_prompt = f"You are a helpful data processing assistant. You MUST respond with ONLY valid JSON matching this schema: {json.dumps(schema_json)}"
 
             response = client.chat.completions.create(
-                model="meta-llama/llama-3-8b-instruct:free", # Free tier model
+                model="openrouter/free",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": prompt}
