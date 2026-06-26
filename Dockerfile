@@ -22,3 +22,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project source files
 COPY config /app/config
 COPY src /app/src
+COPY data /app/data
